@@ -2,7 +2,7 @@
 #include <common/sieve.h>
 
 TEST_CASE( "Prime Seive", "[sieve]" ) {
-    auto const primes = prime_sieve<2088>();
+    auto const sieve = prime_sieve<2088>();
     REQUIRE(sieve[0] == 1);
     REQUIRE(sieve[1] == 1);
     REQUIRE(sieve[2] == 0);

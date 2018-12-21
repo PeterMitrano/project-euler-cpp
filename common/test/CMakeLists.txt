@@ -1,6 +1,7 @@
-add_library(test_main test_main.cpp)
+add_library(test_main main.cpp)
 
-add_executable(tests seive_test.cpp)
+file(GLOB TEST_SRC *_test.cpp)
+add_executable(tests ${TEST_SRC})
 target_link_libraries(tests test_main common Catch2::Catch2)
 
 include(CTest)

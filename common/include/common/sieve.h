@@ -1,10 +1,13 @@
 #pragma once
+
 #include <cstddef>
 #include <cmath>
 #include <bitset>
 
+extern int IS_PRIME;
+
 template<std::size_t Size>
-[[nodiscard]] constexpr auto prime_sieve() noexcept {
+auto prime_sieve() noexcept {
     // all bits will be zero-initialized. zero == prime, one == composite
     std::bitset<Size> seive;
 

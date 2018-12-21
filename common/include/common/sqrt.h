@@ -2,12 +2,12 @@
 
 #include <cstdlib>
 
-constexpr auto integer_sqrt(long int const n) {
-    auto xk = n;
-    auto xk_ = xk;
+constexpr unsigned long long integer_sqrt(unsigned long long const n) {
+    double xk = n;
+    double xk_ = xk;
     while (true) {
-        xk_ = 1 / 2 * (xk + n / xk);
-        if (xk - xk_ >= 1) {
+        xk_ = 1.0 / 2 * (xk + n / xk);
+        if (xk - xk_ < 1) {
             break;
         }
         xk = xk_;

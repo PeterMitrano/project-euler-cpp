@@ -3,19 +3,21 @@
 #include <common/sieve.h>
 
 auto problem_003() {
-    auto answer{0};
-    constexpr auto n = 600851475143;
-    auto i = n;
-    constexpr auto sqrt_n = integer_sqrt(n);
-    auto primes = prime_sieve<sqrt_n>();
+    auto const n = 600851475143ull;
+    auto n_i = n;
+    auto const sqrt_n = integer_sqrt(n);
+    auto const primes = prime_sieve<sqrt_n>();
 
-    for (const auto &p: primes) {
-        if (i % p == 0) {
-            i = i / p;
+    for (auto i = 2ull; i < n_i; ++i) {
+        if (primes[i] == IS_PRIME) {
+            if (n_i % i == 0) {
+                n_i = n_i / i;
+                i = 2ull;
+            }
         }
     }
 
-    return answer;
+    return n_i;
 }
 
 int main() {

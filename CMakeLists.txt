@@ -18,7 +18,6 @@ find_package(Catch2 REQUIRED)
 add_subdirectory(common)
 
 file(GLOB PROBLEM_SUBDIRS [0-9]*.cpp)
-message("${PROBLEM_SUBDIRS}")
 foreach(PROBLEM ${PROBLEM_SUBDIRS})
   get_filename_component(PROBLEM_TARGET ${PROBLEM} NAME_WE)
   add_executable(${PROBLEM_TARGET} ${PROBLEM})
