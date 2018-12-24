@@ -2,8 +2,8 @@
 
 #include <common/palandrome.h>
 
-auto problem_004() {
-    auto largest_palandrome{0u};
+unsigned long problem() {
+    auto largest_palandrome{0ul};
     for (auto a = 100u; a < 1000u; ++a) {
         for (auto b = a; b < 1000u; ++b) {
             auto const c = b * a;
@@ -14,9 +14,4 @@ auto problem_004() {
 
     }
     return largest_palandrome;
-}
-
-int main() {
-    std::cout << problem_004() << '\n';
-    return 0;
 }

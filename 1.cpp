@@ -1,7 +1,7 @@
 #include <iostream>
 
-constexpr auto problem_001() {
-    auto answer{0};
+unsigned long problem() {
+    auto answer{0ul};
     for (auto i = 0; i < 1000; ++i) {
         if (i % 3 == 0 or i % 5 == 0) {
             answer += i;
@@ -9,9 +9,4 @@ constexpr auto problem_001() {
     }
 
     return answer;
-}
-
-int main() {
-    std::cout << problem_001() << '\n';
-    return 0;
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 
-constexpr auto problem_002() {
-    auto sum{2};
+unsigned long problem() {
+    auto sum{2ul};
     auto last_fib = 1;
     auto fib = 2;
     while (fib < 4'000'000) {
@@ -16,7 +16,3 @@ constexpr auto problem_002() {
     return sum;
 }
 
-int main() {
-    std::cout << problem_002() << '\n';
-    return 0;
-}

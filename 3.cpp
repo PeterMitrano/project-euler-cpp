@@ -2,8 +2,8 @@
 #include <common/sqrt.h>
 #include <common/sieve.h>
 
-auto problem_003() {
-    auto const n = 600851475143ull;
+unsigned long problem() {
+    auto const n = 600851475143ul;
     auto n_i = n;
     auto const sqrt_n = integer_sqrt(n);
     auto const primes = prime_sieve<sqrt_n>();
@@ -18,9 +18,4 @@ auto problem_003() {
     }
 
     return n_i;
-}
-
-int main() {
-    std::cout << problem_003() << '\n';
-    return 0;
 }

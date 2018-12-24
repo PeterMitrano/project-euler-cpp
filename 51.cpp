@@ -2,12 +2,13 @@
 #include <algorithm>
 #include <optional>
 #include <tuple>
+#include <utility>
 
 #include <common/sieve.h>
 #include <common/digiterator.h>
 
-auto problem_051() {
-    constexpr auto max = 1'000'000ull;
+unsigned long problem() {
+    constexpr auto max = 1'000'000ul;
     constexpr auto desired_family_size = 8u;
     auto const primes = prime_sieve<max>();
 
@@ -68,21 +69,12 @@ auto problem_051() {
 
     for (auto p = 100'000ul; p < max; ++p) {
         if (primes[p] == IS_PRIME) {
-            auto[has_family, family] = has_digit_family(p);
+            bool has_family{false};
+            std::tie(has_family, std::ignore) = has_digit_family(p);
             if (has_family) {
-                std::cout << p << " [ ";
-                for (auto const &member : family) {
-                    std::cout << member << " ";
-                }
-                std::cout << " ]\n";
                 return p;
             }
         }
     }
     return 0ul;
-}
-
-int main() {
-    std::cout << problem_051() << '\n';
-    return 0;
 }
