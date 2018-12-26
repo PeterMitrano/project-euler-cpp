@@ -1,6 +1,5 @@
+#pragma once
 #include <string>
-
-#define MAX 10000 // for strings
 
 using namespace std;
 
@@ -22,7 +21,7 @@ public:
 
     const bool &getSign() const;
 
-    BigInteger absolute(); // returns the absolute value
+    BigInteger absolute() const; // returns the absolute value
 
     BigInteger &operator=(BigInteger b);
 
@@ -42,15 +41,15 @@ public:
     BigInteger const operator++(int); // postfix
     BigInteger &operator--(); // prefix
     BigInteger const operator--(int); // postfix
-    BigInteger operator+(BigInteger b);
+    BigInteger operator+(BigInteger b) const;
 
-    BigInteger operator-(BigInteger b);
+    BigInteger operator-(BigInteger b) const;
 
-    BigInteger operator*(BigInteger b);
+    BigInteger operator*(BigInteger b) const;
 
-    BigInteger operator/(BigInteger b);
+    BigInteger operator/(BigInteger b) const;
 
-    BigInteger operator%(BigInteger b);
+    BigInteger operator%(BigInteger b) const;
 
     BigInteger &operator+=(BigInteger b);
 
@@ -73,15 +72,15 @@ private:
 
     bool greater(BigInteger n1, BigInteger n2) const;
 
-    string add(string number1, string number2);
+    string add(string number1, string number2) const;
 
-    string subtract(string number1, string number2);
+    string subtract(string number1, string number2) const;
 
-    string multiply(string n1, string n2);
+    string multiply(string n1, string n2) const;
 
-    pair<string, long long> divide(string n, long long den);
+    pair<string, long long> divide(string n, long long den) const;
 
-    string toString(long long n);
+    string toString(long long n) const;
 
-    long long toInt(string s);
+    long long toInt(string s) const;
 };

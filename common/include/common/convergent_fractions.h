@@ -1,4 +1,5 @@
-#include <common/big_integer.h>
+#include <functional>
+#include <common/fraction.h>
 
 auto e_sequence(unsigned long k) {
     if (k == 0u) {
@@ -10,14 +11,16 @@ auto e_sequence(unsigned long k) {
     }
 };
 
-auto numerator_of_convergence_level(unsigned long const convergence_level, BigInteger(*a_sequence)(unsigned long)) {
-    BigInteger last_n{a_sequence(convergence_level)};
-    BigInteger n{a_sequence(convergence_level - 1) * a_sequence(convergence_level) + BigInteger{1}};
-    for (auto i{2ul}; i <= convergence_level; i++) {
+template <typename T>
+auto kth_convergent_fraction(unsigned long const k, std::function<T(unsigned long)> a_sequence) {
+    T last_n{a_sequence(k)};
+    T n{a_sequence(k - 1) * a_sequence(k) + T{1}};
+
+    for (auto i{2ul}; i <= k; i++) {
         auto const temp = n;
-        n = a_sequence(convergence_level - i) * n + last_n;
+        n = a_sequence(k - i) * n + last_n;
         last_n = temp;
     }
 
-    return n;
+    return Fraction<T>{n, last_n};
 }

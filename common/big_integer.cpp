@@ -7,8 +7,6 @@
 #include <cmath>
 #include "common/big_integer.h"
 
-#define MAX 10000 // for strings
-
 BigInteger::BigInteger() // empty constructor initializes zero
 {
     number = "0";
@@ -88,7 +86,7 @@ const bool &BigInteger::getSign() const {
 
 //-------------------------------------------------------------
 // returns the absolute value
-BigInteger BigInteger::absolute() {
+BigInteger BigInteger::absolute() const {
     return BigInteger(getNumber()); // +ve by default
 }
 
@@ -171,7 +169,7 @@ BigInteger const BigInteger::operator--(int) // postfix
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator+(BigInteger b) {
+BigInteger BigInteger::operator+(BigInteger b) const {
     BigInteger addition;
     if (getSign() == b.getSign()) // both +ve or -ve
     {
@@ -187,6 +185,7 @@ BigInteger BigInteger::operator+(BigInteger b) {
             addition.setSign(b.getSign());
         }
     }
+
     if (addition.getNumber() == "0") // avoid (-0) problem
         addition.setSign(false);
 
@@ -194,13 +193,13 @@ BigInteger BigInteger::operator+(BigInteger b) {
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator-(BigInteger b) {
+BigInteger BigInteger::operator-(BigInteger b) const {
     b.setSign(!b.getSign()); // x - y = x + (-y)
     return (*this) + b;
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator*(BigInteger b) {
+BigInteger BigInteger::operator*(BigInteger b) const {
     BigInteger mul;
 
     mul.setNumber(multiply(getNumber(), b.getNumber()));
@@ -214,7 +213,7 @@ BigInteger BigInteger::operator*(BigInteger b) {
 
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator/(BigInteger b) {
+BigInteger BigInteger::operator/(BigInteger b) const {
     long long den = toInt(b.getNumber());
     BigInteger div;
 
@@ -229,7 +228,7 @@ BigInteger BigInteger::operator/(BigInteger b) {
 
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator%(BigInteger b) {
+BigInteger BigInteger::operator%(BigInteger b) const {
     long long den = toInt(b.getNumber());
 
     BigInteger rem;
@@ -333,7 +332,7 @@ bool BigInteger::greater(BigInteger n1, BigInteger n2) const {
 
 //-------------------------------------------------------------
 // adds two strings and returns their sum in as a string
-string BigInteger::add(string number1, string number2) {
+string BigInteger::add(string number1, string number2) const {
     string add = (number1.length() > number2.length()) ? number1 : number2;
     char carry = '0';
     int differenceInLength = abs((int) (number1.size() - number2.size()));
@@ -364,7 +363,7 @@ string BigInteger::add(string number1, string number2) {
 
 //-------------------------------------------------------------
 // subtracts two strings and returns their sum in as a string
-string BigInteger::subtract(string number1, string number2) {
+string BigInteger::subtract(string number1, string number2) const {
     string sub = (number1.length() > number2.length()) ? number1 : number2;
     int differenceInLength = abs((int) (number1.size() - number2.size()));
 
@@ -390,7 +389,7 @@ string BigInteger::subtract(string number1, string number2) {
 
 //-------------------------------------------------------------
 // multiplies two strings and returns their sum in as a string
-string BigInteger::multiply(string n1, string n2) {
+string BigInteger::multiply(string n1, string n2) const {
     if (n1.length() > n2.length())
         n1.swap(n2);
 
@@ -428,10 +427,11 @@ string BigInteger::multiply(string n1, string n2) {
 
 //-------------------------------------------------------------
 // divides string on long long, returns pair(qutiont, remainder)
-pair<string, long long> BigInteger::divide(string n, long long den) {
+pair<string, long long> BigInteger::divide(string n, long long den) const {
     long long rem = 0;
     string result;
-    result.resize(MAX);
+    constexpr auto MAX_STRING_LENGTH{1000u};
+    result.resize(MAX_STRING_LENGTH);
 
     for (int indx = 0, len = n.length(); indx < len; ++indx) {
         rem = (rem * 10) + (n[indx] - '0');
@@ -451,7 +451,7 @@ pair<string, long long> BigInteger::divide(string n, long long den) {
 
 //-------------------------------------------------------------
 // converts long long to string
-string BigInteger::toString(long long n) {
+string BigInteger::toString(long long n) const {
     stringstream ss;
     string temp;
 
@@ -463,7 +463,7 @@ string BigInteger::toString(long long n) {
 
 //-------------------------------------------------------------
 // converts string to long long
-long long BigInteger::toInt(string s) {
+long long BigInteger::toInt(string s) const {
     long long sum = 0;
 
     for (auto i{0u}; i < s.length(); i++)

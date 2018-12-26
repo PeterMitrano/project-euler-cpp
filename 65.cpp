@@ -1,4 +1,3 @@
-#include <fmt/format.h>
 #include <cmath>
 #include <iostream>
 #include <common/fabs.h>
@@ -8,9 +7,9 @@
 
 unsigned long problem() {
     constexpr auto const N = 100u;
-    auto const numerator = numerator_of_convergence_level(N - 1, e_sequence);
+    auto const fraction = kth_convergent_fraction<BigInteger>(N - 1, e_sequence);
     auto sum{0u};
-    for (auto const &digit_char : numerator.getNumber()) {
+    for (auto const &digit_char : fraction.n.getNumber()) {
        auto digit{static_cast<unsigned int>(digit_char - '0')};
        sum += digit;
     }

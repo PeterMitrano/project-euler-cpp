@@ -1,41 +1,50 @@
-#include <fmt/format.h>
 #include <cmath>
 #include <iostream>
-#include <common/fabs.h>
-#include <common/digiterator.h>
-#include <common/big_integer.h>
-#include <numeric>
-
-auto a_sequence(unsigned long k) {
-    if (k == 0u) {
-        return BigInteger{2};
-    } else if (k % 3 == 2) {
-        return BigInteger{(k + 1) * 2 / 3};
-    } else {
-        return BigInteger{1};
-    }
-};
-
-auto numerator_of_convergence_level(unsigned long const convergence_level) {
-    BigInteger last_n{a_sequence(convergence_level)};
-    BigInteger n{a_sequence(convergence_level - 1) * a_sequence(convergence_level) + BigInteger{1}};
-    for (auto i{2ul}; i <= convergence_level; i++) {
-        auto const temp = n;
-        n = a_sequence(convergence_level - i) * n + last_n;
-        last_n = temp;
-    }
-
-    return n;
-}
+#include <common/convergent_fractions.h>
+#include <utility>
 
 unsigned long problem() {
-    constexpr auto const N = 100u;
-    auto const numerator = numerator_of_convergence_level(N - 1);
-    std::cout << numerator.getNumber() << '\n';
-    auto sum{0u};
-    for (auto const &digit_char : numerator.getNumber()) {
-       auto digit{static_cast<unsigned int>(digit_char - '0')};
-       sum += digit;
+    auto diophantine = [&](unsigned long n) {
+        auto i{1u};
+        auto m{0ul};
+        auto d{1ul};
+        auto a0{static_cast<unsigned long>(sqrt(n))};
+        auto a{a0};
+        std::vector<unsigned long> a_vec{a0};
+
+        auto n_sequence = [&](unsigned long k) {
+            return BigInteger{a_vec[k]};
+        };
+
+        while (true) {
+
+            m = d * a - m;
+            d = (n - m * m) / d;
+            a = (a0 + m) / d;
+            a_vec.push_back(a);
+
+            auto const fraction = kth_convergent_fraction<BigInteger>(i, n_sequence);
+            if ((fraction.n * fraction.n > BigInteger{n} * fraction.d * fraction.d) and
+                (fraction.n * fraction.n - BigInteger{n} * fraction.d * fraction.d == BigInteger{1})) {
+                return fraction;
+            }
+
+            ++i;
+        }
+    };
+
+    constexpr auto const D{1000ul};
+    BigInteger maximizing_x{0};
+    auto maximizing_n{0ul};
+    for (auto n{2ul}; n <= D; ++n) {
+        if (std::rint(sqrt(n)) != sqrt(n)) {
+            auto[x, y] = diophantine(n);
+            if (x > maximizing_x) {
+                maximizing_x = x;
+                maximizing_n = n;
+            }
+        }
     }
-    return sum;
+
+    return maximizing_n;
 }

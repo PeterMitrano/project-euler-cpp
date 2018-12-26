@@ -3,7 +3,7 @@
 #include <common/fabs.h>
 #include <common/digiterator.h>
 
-constexpr auto find_period(double const S, unsigned long const a0) {
+constexpr auto find_period(unsigned long const S, unsigned long const a0) {
     auto m{0ul};
     auto d{1ul};
     auto a{a0};
@@ -11,7 +11,7 @@ constexpr auto find_period(double const S, unsigned long const a0) {
     auto i{0ul};
     while (a != 2.0 * a0) {
         m = d * a - m;
-        d = static_cast<unsigned long>((S - m * m) / d);
+        d = (S - m * m) / d;
         a = (a0 + m) / d;
         ++i;
     }
