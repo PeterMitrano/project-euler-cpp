@@ -12,7 +12,7 @@ constexpr auto find_period(double const S, unsigned long const a0) {
     while (a != 2.0 * a0) {
         m = d * a - m;
         d = static_cast<unsigned long>((S - m * m) / d);
-        a = static_cast<unsigned long>((a0 + m)/d);
+        a = (a0 + m) / d;
         ++i;
     }
 
