@@ -12,7 +12,7 @@ unsigned long problem() {
         if (primes[i] == IS_PRIME) {
             if (n_i % i == 0) {
                 n_i = n_i / i;
-                i = 2ull;
+                i = 1ull;
             }
         }
     }

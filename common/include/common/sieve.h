@@ -16,7 +16,7 @@ auto prime_sieve() noexcept {
     seive[1] = 1;
 
     for (std::size_t potential_prime = 2; potential_prime < std::sqrt(Size); ++potential_prime) {
-        if (seive[potential_prime] != 1) {
+        if (seive[potential_prime] == IS_PRIME) {
             std::size_t multiples = 2 * potential_prime;
             while (multiples < Size) {
                 seive.set(multiples);
