@@ -12,18 +12,20 @@ int main(int argc, char **argv) {
     parser.add_options()
             ("t,time", "time the solution")
             ("n,iterations", "maximum iterations to run", cxxopts::value<unsigned int>()->default_value("1000"));
-    auto const result = parser.parse(argc, argv);
-    auto const time = result["time"].as<bool>();
-    auto const iters = result["iterations"].as<unsigned int>();
+    auto const args = parser.parse(argc, argv);
+    auto const time = args["time"].as<bool>();
+    auto const iters = args["iterations"].as<unsigned int>();
 
     if (time) {
         auto const t0 = chrono::high_resolution_clock::now();
         chrono::duration<double> dt = chrono::system_clock::now() - t0;
         auto i = 0u;
+        unsigned long result{0ul};
         for (; dt <= 60s and i < iters; ++i) {
-            std::cout << problem() << '\n';
+            result = problem();
             dt = chrono::system_clock::now() - t0;
         }
+        std::cout << fmt::format("Result: {}\n", result);
         std::cout << fmt::format("Iterations: {}\n", i);
         std::cout << fmt::format("Total Seconds: {}\n", dt.count());
         auto const seconds_per = dt.count() / i;
