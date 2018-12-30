@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
         chrono::duration<double> dt = chrono::system_clock::now() - t0;
         auto i = 0u;
         for (; dt <= 60s and i < iters; ++i) {
-            problem();
+            std::cout << problem() << '\n';
             dt = chrono::system_clock::now() - t0;
         }
         std::cout << fmt::format("Iterations: {}\n", i);
