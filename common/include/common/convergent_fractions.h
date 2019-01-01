@@ -11,7 +11,7 @@ auto e_sequence(unsigned long k) {
     }
 };
 
-template <typename T>
+template<typename T>
 auto kth_convergent_fraction(unsigned long const k, std::function<T(unsigned long)> a_sequence) {
     T last_n{a_sequence(k)};
     T n{a_sequence(k - 1) * a_sequence(k) + T{1}};
@@ -23,4 +23,8 @@ auto kth_convergent_fraction(unsigned long const k, std::function<T(unsigned lon
     }
 
     return Fraction<T>{n, last_n};
+}
+
+auto convergences_of_sqrt_2(unsigned long p, unsigned long q) {
+    return std::make_pair(p + 2 * q, p + q);
 }
