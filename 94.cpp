@@ -9,12 +9,7 @@ unsigned long problem() {
     auto x{7ul};
     auto h{4ul};
 
-    while (true) {
-        std::cout << x << " " << h << '\n';
-
-        if (2 * x >= N) {
-            break;
-        }
+    while (2 * x < N) {
 
         if ((2 * x + 1) % 3 == 0) {
             // a + 1 case
