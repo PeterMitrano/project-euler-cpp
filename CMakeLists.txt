@@ -14,6 +14,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 find_package(Catch2 REQUIRED)
+find_package(PythonLibs 2.7)
 
 add_subdirectory(common)
 
@@ -22,5 +23,6 @@ add_library(runner runner.cpp)
 foreach(PROBLEM ${PROBLEM_SUBDIRS})
   get_filename_component(PROBLEM_TARGET ${PROBLEM} NAME_WE)
   add_executable(${PROBLEM_TARGET} ${PROBLEM})
-  target_link_libraries(${PROBLEM_TARGET} runner common fmt stdc++fs)
+  target_include_directories(${PROBLEM_TARGET} PRIVATE ${PYTHON_INCLUDE_DIRS})
+  target_link_libraries(${PROBLEM_TARGET} runner common fmt stdc++fs ${PYTHON_LIBRARIES})
 endforeach()
