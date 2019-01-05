@@ -14,10 +14,7 @@ unsigned long problem() {
     B << 1, 2, 2, 2, 1, 2, 2, 2, 3;
     C << -1, 2, 2, -2, 1, 2, -2, 2, 3;
 
-    Eigen::Vector3i root{3, 4, 5};
     std::vector<unsigned long> perimeters;
-    std::vector<Eigen::Vector3i> leaves{root};
-
 
     auto add_non_primitives = [&](Eigen::Vector3i const &primitive) {
         auto x{2ul};
@@ -31,6 +28,11 @@ unsigned long problem() {
             ++x;
         }
     };
+
+    Eigen::Vector3i root{3, 4, 5};
+    perimeters.emplace_back(root.sum());
+    add_non_primitives(root);
+    std::vector<Eigen::Vector3i> leaves{root};
 
     while (true) {
         std::vector<Eigen::Vector3i> new_leaves;
