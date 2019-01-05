@@ -59,13 +59,18 @@ def build_all_problems(args, build_dir):
     return True
 
 
-def update_db_table(args, build_dir, db_file):
-    # load the db
+def load_db(db_file):
     db_file_ptr_read = open(db_file, 'r')
     db_reader = csv.reader(db_file_ptr_read)
     db = {}
     for problem_number, last_modified, runtime_ns in db_reader:
         db[int(problem_number)] = Entry(float(last_modified), int(runtime_ns))
+    return db
+
+
+def update_db_table(args, build_dir, db_file):
+    # load the db
+    db = load_db(db_file)
 
     # look at all the current executables
     files = os.listdir(build_dir)
@@ -102,11 +107,12 @@ def update_db_table(args, build_dir, db_file):
 
 
 def markdown_table(args, db_file):
-    db_file_ptr = open(db_file, 'r')
-    db_reader = csv.reader(db_file_ptr)
+    db = load_db(db_file)
+    db = dict(sorted(db.items()))
+
     markdown_table = "|Problem Number|Runtime (nanoseconds)|\n|-|-|\n"
-    for problem_number, _, runtime_ns in db_reader:
-        markdown_row = "|{}|{}|".format(problem_number, runtime_ns)
+    for problem_number, entry in db.items():
+        markdown_row = "|{}|{}|".format(problem_number, entry.runtime_ns)
         markdown_table += markdown_row + "\n"
     return markdown_table
 
@@ -116,7 +122,11 @@ def main():
     parser.add_argument("--quiet", '-q', action="store_true")
     parser.add_argument("--build-dir", '-b', action="store_true")
     parser.add_argument("--db-file", '-d', action="store_true")
+    parser.add_argument("--readme", '-r', action="store_true", help="update readme")
     args = parser.parse_args()
+
+    if args.readme:
+        args.quiet = True
 
     success, build_dir, db_file = check_and_setup_env(args)
     if not success:
@@ -129,7 +139,13 @@ def main():
     update_db_table(args, build_dir, db_file)
 
     table = markdown_table(args, db_file)
+
     print(table)
+
+    if args.readme:
+        readme = open("README.md", 'w')
+        readme.write("C++ Implementations of Project Euler\n\n")
+        readme.write(table)
 
     return 0
 
