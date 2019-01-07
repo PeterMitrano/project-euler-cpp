@@ -1,3 +1,5 @@
+#include <utility>
+
 #pragma once
 
 #include <iterator>
@@ -23,22 +25,24 @@ public:
     using const_reverse_iterator = typename array_type::const_reverse_iterator;
 
 private:
-    const unsigned int size_;
     array_type digits;
 
 public:
 
-    explicit Digiterator(unsigned long N) : size_(num_digits(N)) {
-        digits.resize(size_);
-        for (auto i = 0u; i < size_; ++i) {
-            digits[size_ - i - 1] = static_cast<unsigned int>(N / pow10[i] % 10u);
+    explicit Digiterator(array_type d) : digits(std::move(d)) {}
+
+    explicit Digiterator(unsigned long N) {
+        auto const size = num_digits(N);
+        digits.resize(size);
+        for (auto i = 0u; i < size; ++i) {
+            digits[size - i - 1] = static_cast<unsigned int>(N / pow10[i] % 10u);
         }
     }
 
     unsigned long number() const {
         auto number{0ul};
-        for (auto i = 0u; i < size_; ++i) {
-            number += pow10[size_ - i - 1] * digits[i];
+        for (auto i = 0u; i < digits.size(); ++i) {
+            number += pow10[digits.size() - i - 1] * digits[i];
         }
         return number;
     }
@@ -69,7 +73,7 @@ public:
     }
 
     auto size() const {
-        return size_;
+        return digits.size();
     }
 };
 
