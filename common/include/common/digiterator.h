@@ -39,7 +39,7 @@ public:
         }
     }
 
-    unsigned long number() const {
+    [[nodiscard]] unsigned long number() const {
         auto number{0ul};
         for (auto i = 0u; i < digits.size(); ++i) {
             number += pow10[digits.size() - i - 1] * digits[i];
@@ -50,19 +50,19 @@ public:
 
     iterator begin() noexcept { return digits.begin(); }
 
-    const_iterator cbegin() const noexcept { return digits.cbegin(); }
+    [[nodiscard]] const_iterator cbegin() const noexcept { return digits.cbegin(); }
 
     iterator end() noexcept { return digits.end(); }
 
-    const_iterator cend() const noexcept { return digits.cend(); }
+    [[nodiscard]] const_iterator cend() const noexcept { return digits.cend(); }
 
     reverse_iterator rbegin() noexcept { return digits.rbegin(); }
 
-    const_reverse_iterator rcbegin() const noexcept { return digits.crbegin(); }
+    [[nodiscard]] const_reverse_iterator rcbegin() const noexcept { return digits.crbegin(); }
 
     reverse_iterator rend() noexcept { return digits.rend(); }
 
-    const_reverse_iterator rcend() const noexcept { return digits.crend(); }
+    [[nodiscard]] const_reverse_iterator rcend() const noexcept { return digits.crend(); }
 
     unsigned int operator[](unsigned int idx) const {
         return digits[idx];
@@ -72,7 +72,7 @@ public:
         return digits[idx];
     }
 
-    auto size() const {
+    [[nodiscard]] auto size() const {
         return digits.size();
     }
 };

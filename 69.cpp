@@ -37,7 +37,7 @@ auto unique_prime_factor_sieve() noexcept {
 
 auto const sieve = unique_prime_factor_sieve<1'000'000>();
 
-auto phi(unsigned long n) {
+auto compute_phi(unsigned long n) {
     auto totient_product = [&](double const &prod, unsigned long const &p) {
         return prod * (1 - 1.0 / p);
     };
@@ -51,7 +51,7 @@ unsigned long problem() {
     auto maximum_ratio{0.0};
     auto maximum_n{0ul};
     for (auto n{2ul}; n <= 1'000'000; ++n) {
-        auto const ratio = static_cast<double>(n) / phi(n);
+        auto const ratio = static_cast<double>(n) / compute_phi(n);
         if (ratio > maximum_ratio) {
             maximum_ratio = ratio;
             maximum_n = n;
