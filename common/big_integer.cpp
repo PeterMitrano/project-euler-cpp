@@ -19,7 +19,8 @@ BigInteger::BigInteger(string s) // "string" constructor
     {
         setNumber(s);
         sign = false; // +ve
-    } else {
+    } else
+    {
         setNumber(s.substr(1));
         sign = (s[0] == '-');
     }
@@ -30,6 +31,11 @@ BigInteger::BigInteger(string s, bool sin) // "string" constructor
 {
     setNumber(s);
     setSign(sin);
+}
+
+//-------------------------------------------------------------
+BigInteger::BigInteger(unsigned int n) : BigInteger(static_cast<unsigned long>(n)) // "unsigned int" constructor
+{
 }
 
 //-------------------------------------------------------------
@@ -45,7 +51,8 @@ BigInteger::BigInteger(int n) // "int" constructor
     {
         setNumber(s);
         setSign(false); // +ve
-    } else {
+    } else
+    {
         setNumber(s.substr(1));
         setSign(s[0] == '-');
     }
@@ -63,7 +70,8 @@ BigInteger::BigInteger(unsigned long n) // "unsigned long" constructor
 }
 
 //-------------------------------------------------------------
-void BigInteger::setNumber(string s) {
+void BigInteger::setNumber(string s)
+{
     number = s;
 }
 
@@ -74,56 +82,72 @@ const string &BigInteger::getNumber() const // retrieves the number
 }
 
 //-------------------------------------------------------------
-void BigInteger::setSign(bool s) {
+int BigInteger::getDigits() const // retrieves the number of digits
+{
+    return number.size();
+}
+
+//-------------------------------------------------------------
+void BigInteger::setSign(bool s)
+{
     sign = s;
 }
 
 //-------------------------------------------------------------
-const bool &BigInteger::getSign() const {
+const bool &BigInteger::getSign() const
+{
     return sign;
 }
 
 //-------------------------------------------------------------
 // returns the absolute value
-BigInteger BigInteger::absolute() const {
+BigInteger BigInteger::absolute() const
+{
     return BigInteger(getNumber()); // +ve by default
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator=(BigInteger b) {
+BigInteger &BigInteger::operator=(BigInteger b)
+{
     setNumber(b.getNumber());
     setSign(b.getSign());
     return *this;
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator==(BigInteger b) const {
+bool BigInteger::operator==(BigInteger b) const
+{
     return equals((*this), b);
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator!=(BigInteger b) const {
+bool BigInteger::operator!=(BigInteger b) const
+{
     return !equals((*this), b);
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator>(BigInteger b) const {
+bool BigInteger::operator>(BigInteger b) const
+{
     return greater((*this), b);
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator<(BigInteger b) const {
+bool BigInteger::operator<(BigInteger b) const
+{
     return less((*this), b);
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator>=(BigInteger b) const {
+bool BigInteger::operator>=(BigInteger b) const
+{
     return equals((*this), b)
            || greater((*this), b);
 }
 
 //-------------------------------------------------------------
-bool BigInteger::operator<=(BigInteger b) const {
+bool BigInteger::operator<=(BigInteger b) const
+{
     return equals((*this), b)
            || less((*this), b);
 }
@@ -168,7 +192,8 @@ BigInteger const BigInteger::operator--(int) // postfix
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator+(BigInteger b) const {
+BigInteger BigInteger::operator+(BigInteger b) const
+{
     BigInteger addition;
     if (getSign() == b.getSign()) // both +ve or -ve
     {
@@ -176,10 +201,12 @@ BigInteger BigInteger::operator+(BigInteger b) const {
         addition.setSign(getSign());
     } else // sign different
     {
-        if (absolute() > b.absolute()) {
+        if (absolute() > b.absolute())
+        {
             addition.setNumber(subtract(getNumber(), b.getNumber()));
             addition.setSign(getSign());
-        } else {
+        } else
+        {
             addition.setNumber(subtract(b.getNumber(), getNumber()));
             addition.setSign(b.getSign());
         }
@@ -192,13 +219,15 @@ BigInteger BigInteger::operator+(BigInteger b) const {
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator-(BigInteger b) const {
+BigInteger BigInteger::operator-(BigInteger b) const
+{
     b.setSign(!b.getSign()); // x - y = x + (-y)
     return (*this) + b;
 }
 
 //-------------------------------------------------------------
-BigInteger BigInteger::operator*(BigInteger b) const {
+BigInteger BigInteger::operator*(BigInteger b) const
+{
     BigInteger mul;
 
     mul.setNumber(multiply(getNumber(), b.getNumber()));
@@ -212,7 +241,8 @@ BigInteger BigInteger::operator*(BigInteger b) const {
 
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator/(BigInteger b) const {
+BigInteger BigInteger::operator/(BigInteger b) const
+{
     long long den = toInt(b.getNumber());
     BigInteger div;
 
@@ -227,7 +257,8 @@ BigInteger BigInteger::operator/(BigInteger b) const {
 
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator%(BigInteger b) const {
+BigInteger BigInteger::operator%(BigInteger b) const
+{
     long long den = toInt(b.getNumber());
 
     BigInteger rem;
@@ -242,37 +273,43 @@ BigInteger BigInteger::operator%(BigInteger b) const {
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator+=(BigInteger b) {
+BigInteger &BigInteger::operator+=(BigInteger b)
+{
     (*this) = (*this) + b;
     return (*this);
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator-=(BigInteger b) {
+BigInteger &BigInteger::operator-=(BigInteger b)
+{
     (*this) = (*this) - b;
     return (*this);
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator*=(BigInteger b) {
+BigInteger &BigInteger::operator*=(BigInteger b)
+{
     (*this) = (*this) * b;
     return (*this);
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator/=(BigInteger b) {
+BigInteger &BigInteger::operator/=(BigInteger b)
+{
     (*this) = (*this) / b;
     return (*this);
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator%=(BigInteger b) {
+BigInteger &BigInteger::operator%=(BigInteger b)
+{
     (*this) = (*this) % b;
     return (*this);
 }
 
 //-------------------------------------------------------------
-BigInteger &BigInteger::operator[](int n) {
+BigInteger &BigInteger::operator[](int n)
+{
     return *(this + (n * sizeof(BigInteger)));
 }
 
@@ -291,13 +328,15 @@ BigInteger::operator string() // for conversion from BigInteger to string
 }
 //-------------------------------------------------------------
 
-bool BigInteger::equals(BigInteger n1, BigInteger n2) const {
+bool BigInteger::equals(BigInteger n1, BigInteger n2) const
+{
     return n1.getNumber() == n2.getNumber()
            && n1.getSign() == n2.getSign();
 }
 
 //-------------------------------------------------------------
-bool BigInteger::less(BigInteger n1, BigInteger n2) const {
+bool BigInteger::less(BigInteger n1, BigInteger n2) const
+{
     bool sign1 = n1.getSign();
     bool sign2 = n2.getSign();
 
@@ -325,13 +364,15 @@ bool BigInteger::less(BigInteger n1, BigInteger n2) const {
 }
 
 //-------------------------------------------------------------
-bool BigInteger::greater(BigInteger n1, BigInteger n2) const {
+bool BigInteger::greater(BigInteger n1, BigInteger n2) const
+{
     return !equals(n1, n2) && !less(n1, n2);
 }
 
 //-------------------------------------------------------------
 // adds two strings and returns their sum in as a string
-string BigInteger::add(string number1, string number2) const {
+string BigInteger::add(string number1, string number2) const
+{
     string add = (number1.length() > number2.length()) ? number1 : number2;
     char carry = '0';
     int differenceInLength = abs((int) (number1.size() - number2.size()));
@@ -342,18 +383,22 @@ string BigInteger::add(string number1, string number2) const {
     else// if(number1.size() < number2.size())
         number1.insert(0, differenceInLength, '0');
 
-    for (int i = number1.size() - 1; i >= 0; --i) {
+    for (int i = number1.size() - 1; i >= 0; --i)
+    {
         add[i] = ((carry - '0') + (number1[i] - '0') + (number2[i] - '0')) + '0';
 
-        if (i != 0) {
-            if (add[i] > '9') {
+        if (i != 0)
+        {
+            if (add[i] > '9')
+            {
                 add[i] -= 10;
                 carry = '1';
             } else
                 carry = '0';
         }
     }
-    if (add[0] > '9') {
+    if (add[0] > '9')
+    {
         add[0] -= 10;
         add.insert(0, 1, '1');
     }
@@ -362,7 +407,8 @@ string BigInteger::add(string number1, string number2) const {
 
 //-------------------------------------------------------------
 // subtracts two strings and returns their sum in as a string
-string BigInteger::subtract(string number1, string number2) const {
+string BigInteger::subtract(string number1, string number2) const
+{
     string sub = (number1.length() > number2.length()) ? number1 : number2;
     int differenceInLength = abs((int) (number1.size() - number2.size()));
 
@@ -372,8 +418,10 @@ string BigInteger::subtract(string number1, string number2) const {
     else
         number1.insert(0, differenceInLength, '0');
 
-    for (int i = number1.length() - 1; i >= 0; --i) {
-        if (number1[i] < number2[i]) {
+    for (int i = number1.length() - 1; i >= 0; --i)
+    {
+        if (number1[i] < number2[i])
+        {
             number1[i] += 10;
             number1[i - 1]--;
         }
@@ -388,20 +436,24 @@ string BigInteger::subtract(string number1, string number2) const {
 
 //-------------------------------------------------------------
 // multiplies two strings and returns their sum in as a string
-string BigInteger::multiply(string n1, string n2) const {
+string BigInteger::multiply(string n1, string n2) const
+{
     if (n1.length() > n2.length())
         n1.swap(n2);
 
     string res = "0";
-    for (int i = n1.length() - 1; i >= 0; --i) {
+    for (int i = n1.length() - 1; i >= 0; --i)
+    {
         string temp = n2;
         int currentDigit = n1[i] - '0';
         int carry = 0;
 
-        for (int j = temp.length() - 1; j >= 0; --j) {
+        for (int j = temp.length() - 1; j >= 0; --j)
+        {
             temp[j] = ((temp[j] - '0') * currentDigit) + carry;
 
-            if (temp[j] > 9) {
+            if (temp[j] > 9)
+            {
                 carry = (temp[j] / 10);
                 temp[j] -= (carry * 10);
             } else
@@ -426,13 +478,15 @@ string BigInteger::multiply(string n1, string n2) const {
 
 //-------------------------------------------------------------
 // divides string on long long, returns pair(qutiont, remainder)
-pair<string, long long> BigInteger::divide(string n, long long den) const {
+pair<string, long long> BigInteger::divide(string n, long long den) const
+{
     long long rem = 0;
     string result;
     constexpr auto MAX_STRING_LENGTH{1000u};
     result.resize(MAX_STRING_LENGTH);
 
-    for (int indx = 0, len = n.length(); indx < len; ++indx) {
+    for (int indx = 0, len = n.length(); indx < len; ++indx)
+    {
         rem = (rem * 10) + (n[indx] - '0');
         result[indx] = rem / den + '0';
         rem %= den;
@@ -450,7 +504,8 @@ pair<string, long long> BigInteger::divide(string n, long long den) const {
 
 //-------------------------------------------------------------
 // converts long long to string
-string BigInteger::toString(long long n) const {
+string BigInteger::toString(long long n) const
+{
     stringstream ss;
     string temp;
 
@@ -462,7 +517,8 @@ string BigInteger::toString(long long n) const {
 
 //-------------------------------------------------------------
 // converts string to long long
-long long BigInteger::toInt(string s) const {
+long long BigInteger::toInt(string s) const
+{
     long long sum = 0;
 
     for (auto i{0u}; i < s.length(); i++)

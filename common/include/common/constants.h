@@ -24,4 +24,3 @@ constexpr std::array<unsigned long, 20> pow10{
         1000000000000000000u,
         10000000000000000000u,
 };
-
