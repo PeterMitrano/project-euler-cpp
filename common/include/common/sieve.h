@@ -1,12 +1,14 @@
 #pragma once
 
-#include <cstddef>
-#include <cmath>
 #include <bitset>
+#include <cmath>
+#include <cstddef>
+#include <vector>
 
 extern int IS_PRIME;
 
 template<std::size_t Size>
+/** creates a lookup table for integers from 0 to Size indicating whether they are prime **/
 auto prime_sieve() noexcept {
     // all bits will be zero-initialized. zero == prime, one == composite
     std::bitset<Size> seive;
@@ -26,4 +28,18 @@ auto prime_sieve() noexcept {
     }
 
     return seive;
+}
+
+template<std::size_t Size>
+auto primes_list() {
+    auto const sieve = prime_sieve<Size>();
+    std::vector<unsigned int> primes;
+    for (auto i=0u; i<= Size; ++i)
+    {
+        if (!sieve[i])
+        {
+            primes.push_back(i);
+        }
+    }
+    return primes;
 }
