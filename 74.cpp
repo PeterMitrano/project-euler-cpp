@@ -11,7 +11,6 @@ auto static factorial = [](auto n)
     switch (n)
     {
         case 0:
-            return 1;
         case 1:
             return 1;
         case 2:
@@ -76,7 +75,7 @@ unsigned long problem()
         {
             auto const chain_length = std::max(c + j + 1, static_cast<unsigned long>(min_c));
             chain_lengths[n_j] = chain_length;
-//            std::cout << "adding " << n_j << " " << chain_length << '\n';
+            // std::cout << "adding " << n_j << " " << chain_length << '\n';
         }
         auto const chain_length = chain_lengths.at(n);
         return chain_length;

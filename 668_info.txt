@@ -1,0 +1,12 @@
+# small perf improvements
+with erase_if - 2189704134
+no erase_if   -  341598412
+product       -  111581124
+
+# performance of composing sets of primes < M
+M           - runtime (in milliseconds)
+100,000     -    111
+1,000,000   -    853
+10,000,000  -  7,125
+100,000,000 - 56,580
+so 10B would be 100 minutes? Yuck.

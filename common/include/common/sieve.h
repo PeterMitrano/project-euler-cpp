@@ -34,7 +34,7 @@ template<std::size_t Size>
 auto primes_list() {
     auto const sieve = prime_sieve<Size>();
     std::vector<unsigned int> primes;
-    for (auto i=0u; i<= Size; ++i)
+    for (auto i=0u; i< Size; ++i)
     {
         if (!sieve[i])
         {
